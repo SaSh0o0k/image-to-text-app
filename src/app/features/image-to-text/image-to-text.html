@@ -1,0 +1,20 @@
+<!-- image-to-text.component.html -->
+<div class="container">
+  <h1>Image to Text Converter</h1>
+
+  <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
+  <div *ngIf="previewUrl" class="preview">
+    <img [src]="previewUrl" alt="Preview" />
+  </div>
+
+  <button (click)="extractText()" [disabled]="!selectedFile || loading">Extract Text</button>
+
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="extractedText">
+    <h3>Extracted Text:</h3>
+    <textarea [value]="extractedText" readonly></textarea>
+    <button (click)="copyToClipboard()">Copy to Clipboard</button>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>
