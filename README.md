@@ -1,59 +1,49 @@
-# ImageToTextApp
+# Image to Text Converter
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+Цей вебдодаток дозволяє користувачеві завантажити зображення (JPEG або PNG, розміром до 2MB), передати його на сторонній API для розпізнавання тексту, та відобразити витягнутий текст на сторінці.
 
-## Development server
+## Основні можливості
 
-To start a local development server, run:
+- Завантаження зображення через інтерфейс користувача
+- Попередній перегляд завантаженого зображення
+- Витягнення тексту за допомогою API Ninjas (imagetotext)
+- Відображення розпізнаного тексту
+- Можливість скопіювати текст у буфер обміну
 
+## Використані технології
+
+- Angular 18 (standalone компоненти)
+- TypeScript
+- API Ninjas (https://api-ninjas.com/api/imagetotext)
+
+## Встановлення та запуск
+
+1. Клонувати репозиторій:
+```bash
+git clone https://github.com/SaSh0o0k/image-to-text-app.git
+cd image-to-text-app
+```
+
+Встановити залежності:
+```bash
+npm install
+```
+
+Запустити дев-сервер:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+Відкрити додаток у браузері:
 ```bash
-ng generate component component-name
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Налаштування API ключа
 
+- Зареєструйтесь на api-ninjas.com
+- Отримайте API ключ
+- Вставте його у файл:
 ```bash
-ng generate --help
+src\app\features\image-to-text\api-key.ts
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
