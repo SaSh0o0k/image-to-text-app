@@ -1,20 +1,52 @@
-<!-- image-to-text.component.html -->
-<div class="container">
-  <h1>Image to Text Converter</h1>
-
-  <input type="file" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
-  <div *ngIf="previewUrl" class="preview">
-    <img [src]="previewUrl" alt="Preview" />
+<div class="image-to-text">
+  <div class="header">
+    <h1>Image to Text Converter</h1>
   </div>
 
-  <button (click)="extractText()" [disabled]="!selectedFile || loading">Extract Text</button>
-
-  <div *ngIf="loading">Loading...</div>
-  <div *ngIf="extractedText">
-    <h3>Extracted Text:</h3>
-    <textarea [value]="extractedText" readonly></textarea>
-    <button (click)="copyToClipboard()">Copy to Clipboard</button>
+  <div class="requirements">
+    <strong>Вимоги до файлу:</strong> Максимальний розмір: 2 MB | Формати: JPEG, PNG
   </div>
 
-  <div *ngIf="error" class="error">{{ error }}</div>
+  <div class="upload-section" [ngClass]="{'dragover': isDragOver}" (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+    <div class="upload-icon">📁</div>
+    <div class="upload-text">Перетягніть зображення сюди або натисніть кнопку для вибору</div>
+    <input type="file" #fileInput class="file-input" (change)="onFileSelected($event)" accept="image/png, image/jpeg" />
+    <button class="upload-btn" (click)="fileInput.click()">Вибрати файл</button>
+
+    <div class="file-info" *ngIf="selectedFile">
+      <button class="remove-btn" (click)="removeFile(fileInput)" title="Видалити">×</button>
+      <div class="file-details">
+        <div class="image-preview" *ngIf="previewUrl">
+          <img [src]="previewUrl" alt="Preview" />
+        </div>
+        <div>
+          <div class="file-name"><strong>{{ selectedFile.name }}</strong></div>
+          <div>{{ formatFileSize(selectedFile.size) }} | {{ getFileExtension(selectedFile) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="process-btn" *ngIf="canExtract" (click)="extractText()">Витягнути текст</button>
+
+  <button class="process-btn loading-btn" *ngIf="loading" disabled>
+    <div class="loading">
+      <div class="spinner"></div>Обробка зображення...
+    </div>
+  </button>
+
+  <div class="result-section" *ngIf="extractedText">
+    <div class="result-header">
+      <h3 class="result-title">Витягнутий текст</h3>
+      <button class="copy-btn" (click)="copyToClipboard()" [disabled]="!extractedText">Копіювати</button>
+    </div>
+    <textarea class="extracted-text" [value]="extractedText" readonly></textarea>
+  </div>
+
+  <div class="toast-container">
+    <div *ngFor="let toast of toasts" class="toast" [ngClass]="toast.type">
+      {{ toast.message }}
+    </div>
+  </div>
 </div>
